@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apex International Banking Limited</title>
+<style>
+:root{--ink:#16211f;--muted:#5f6d6a;--line:#dbe1df;--bg:#f2f4f3;--card:#fff;--g1:#0d3531;--g2:#0a2825;--g3:#1d5750;--brass:#b78a3b;--bad:#a3262b;--good:#1d6b44}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.55 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+button,input,select{font:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.hidden{display:none!important}
+.serif,h1,h2,h3,.mark b{font-family:Georgia,"Times New Roman",serif}
+.mark{display:flex;align-items:center;gap:12px}
+.mark i{width:36px;height:36px;flex:none;border:1.5px solid var(--brass);display:grid;place-items:center;font:700 19px Georgia,serif;color:var(--brass);font-style:normal;transform:rotate(45deg)}
+.mark i span{transform:rotate(-45deg)}
+.mark b{font-weight:600;font-size:17px;line-height:1.15;letter-spacing:.2px}
+
+/* ---------- auth ---------- */
+.auth{display:grid;grid-template-columns:1.1fr 1fr;min-height:100vh}
+.hero{position:relative;overflow:hidden;background:var(--g2);color:#e6eeec;padding:52px 60px;display:flex;flex-direction:column;justify-content:space-between}
+.hero:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 1px,transparent 1px 22px),radial-gradient(circle at 85% 12%,rgba(183,138,59,.22),transparent 45%)}
+.hero>*{position:relative}
+.hero h1{font-weight:400;font-size:42px;line-height:1.15;margin:0 0 18px;max-width:470px}
+.hero p{color:#a9bcb8;max-width:420px;margin:0 0 34px;font-size:16px}
+.facts{display:grid;gap:18px;max-width:430px}
+.facts div{border-left:2px solid var(--brass);padding-left:16px}
+.facts b{display:block;font-weight:600;color:#fff}.facts span{color:#9fb3af;font-size:14px}
+.hero small{color:#7f9692}
+.side{display:flex;align-items:center;justify-content:center;padding:36px 28px;background:#fff}
+.panel{width:100%;max-width:390px}
+.tabs{display:flex;gap:26px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.tabs button{background:none;border:0;padding:0 0 12px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;font-weight:500}
+.tabs button.on{color:var(--g1);border-color:var(--brass);font-weight:600}
+h2{font-weight:600;font-size:24px;margin:0 0 4px}
+h3{font-weight:600;font-size:17px;margin:0 0 14px}
+.sub{color:var(--muted);margin:0 0 22px}
+label{display:block;font-size:13px;font-weight:500;color:#3d4a47;margin:16px 0 6px}
+input,select{width:100%;padding:11px 13px;border:1px solid #c3cbc9;border-radius:4px;background:#fff;color:var(--ink)}
+input:focus,select:focus{border-color:var(--g3);outline:none;box-shadow:0 0 0 3px rgba(29,87,80,.14)}
+.pw{position:relative}.pw button{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--g3);cursor:pointer;font-size:13px;padding:6px 8px}
+.btn{background:var(--g1);color:#fff;border:0;border-radius:4px;padding:12px 20px;cursor:pointer;font-weight:600;margin-top:24px;transition:background .15s}
+.btn:hover{background:var(--g3)}.btn:disabled{opacity:.6;cursor:wait}
+.btn.full{width:100%}
+.btn.alt{background:#fff;color:var(--g1);border:1px solid var(--g1)}.btn.alt:hover{background:#eef3f2}
+.btn.danger{background:#fff;color:var(--bad);border:1px solid var(--bad)}.btn.danger:hover{background:#fbeeee}
+.btn.sm{padding:8px 14px;margin-top:0;font-size:14px}
+.msg{margin-top:16px;padding:10px 13px;border-left:3px solid;font-size:14px;background:#fafbfb}
+.msg.bad{border-color:var(--bad);color:var(--bad);background:#fcf3f3}.msg.ok{border-color:var(--good);color:var(--good);background:#f1f8f4}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.link{background:none;border:0;color:var(--g3);cursor:pointer;padding:0;text-decoration:underline}
+.foot{margin-top:30px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between}
+.accbox{border:1px solid var(--line);border-top:3px solid var(--brass);padding:22px;margin:6px 0 4px;text-align:center}
+.accbox div{font:600 34px Georgia,serif;letter-spacing:3px;color:var(--g1);margin:6px 0}
+
+/* ---------- app shell ---------- */
+.shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:var(--g2);color:#d7e3e0;padding:26px 0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+aside .mark{padding:0 24px 26px;border-bottom:1px solid rgba(255,255,255,.09)}
+aside .mark b{color:#fff;font-size:15px}
+nav{padding:18px 0;flex:1}
+nav a{display:block;padding:11px 24px;color:#a9bcb8;cursor:pointer;border-left:3px solid transparent}
+nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
+nav a.on{color:#fff;border-color:var(--brass);background:rgba(255,255,255,.07);font-weight:600}
+.user{padding:18px 24px 0;border-top:1px solid rgba(255,255,255,.09);font-size:13px;color:#a9bcb8}
+.user b{display:block;color:#fff;font-size:14px;font-weight:600}
+.user button{margin-top:12px;background:none;border:1px solid #3d6660;color:#fff;border-radius:4px;padding:7px 14px;cursor:pointer}
+.user button:hover{background:rgba(255,255,255,.08)}
+main{padding:36px 44px 60px;min-width:0;max-width:1060px}
+.pagehead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.pagehead .sub{margin:0}
+.bal{background:var(--g1);color:#fff;padding:28px 30px;border-bottom:3px solid var(--brass);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-end;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 1px,transparent 1px 22px)}
+.bal small{color:#a9bcb8;font-size:13px}.bal .amt{font:400 42px/1.1 Georgia,serif;margin-top:4px}
+.bal .meta{text-align:right;font-size:13px;color:#a9bcb8}.bal .meta b{color:#fff;font-weight:600;font-size:15px;display:block;letter-spacing:1px}
+.quick{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 26px}
+.grid{display:grid;grid-template-columns:1.6fr 1fr;gap:22px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);padding:24px}
+.card.narrow{max-width:520px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:22px}
+.stat{background:#fff;border:1px solid var(--line);padding:16px 18px}
+.stat small{color:var(--muted);display:block}.stat b{font:600 22px Georgia,serif}
+dl{display:grid;grid-template-columns:140px 1fr;gap:10px 14px;margin:0}
+dt{color:var(--muted)}dd{margin:0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-weight:600;color:var(--muted);padding:10px 12px;border-bottom:2px solid var(--line);background:#fafbfb;white-space:nowrap}
+td{padding:11px 12px;border-bottom:1px solid #eaeeed}
+tr.click{cursor:pointer}tr.click:hover td{background:#f6f9f8}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.in{color:var(--good)}.out{color:var(--bad)}
+.scroll{overflow-x:auto}
+.empty{color:var(--muted);padding:16px 0}
+.note{color:var(--muted);font-size:13px;margin-top:12px}
+.found{font-size:13px;margin-top:6px;color:var(--good)}.found.bad{color:var(--bad)}
+.pill{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:600;background:#e6f1ec;color:var(--good)}
+.pill.warn{background:#f7efdc;color:#7a5a14}.pill.mut{background:#eceeee;color:var(--muted)}
+.bar{height:6px;background:#e3e9e7;margin:10px 0 4px}.bar i{display:block;height:100%;background:var(--brass)}
+.receipt{background:#fff;border:1px solid var(--line);border-top:3px solid var(--good);padding:18px 20px;margin-top:18px}
+.receipt h3{color:var(--good);margin-bottom:10px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tools select,.tools input{width:auto;min-width:160px}
+.back{margin-bottom:14px}
+@media(max-width:900px){.auth{grid-template-columns:1fr}.hero{padding:30px 28px}.hero h1{font-size:30px}.facts{display:none}
+.shell{grid-template-columns:1fr}aside{position:static;height:auto;padding:14px 0 0}aside .mark{padding:0 18px 14px}
+nav{display:flex;overflow-x:auto;padding:0}nav a{white-space:nowrap;padding:12px 16px;border-left:0;border-bottom:3px solid transparent}nav a.on{border-color:var(--brass)}
+.user{display:flex;justify-content:space-between;align-items:center;padding:10px 18px}.user button{margin:0}
+main{padding:22px 16px 50px}.grid{grid-template-columns:1fr}.bal .meta{text-align:left}dl{grid-template-columns:1fr}}
+@media print{aside,.tools,.quick,.btn{display:none!important}.shell{display:block}main{padding:0}}
+@media(prefers-reduced-motion:no-preference){main>*{animation:f .22s ease-out}@keyframes f{from{opacity:0}to{opacity:1}}}
+</style>
+</head>
+<body>
+
+<div id="auth" class="auth hidden">
+  <section class="hero">
+    <div class="mark"><i><span>A</span></i><b>Apex International<br>Banking Limited</b></div>
+    <div>
+      <h1>Your money, kept in good order.</h1>
+      <p>Everyday banking and fixed deposits, managed from one secure place.</p>
+      <div class="facts">
+        <div><b>Fixed Deposits at 7% a year</b><span>Compounded annually, for 1 to 10 years.</span></div>
+        <div><b>Transfers between Apex accounts</b><span>Confirm the recipient's name before you send.</span></div>
+        <div><b>PIN on every transaction</b><span>Sessions close themselves after 10 idle minutes.</span></div>
+      </div>
+    </div>
+    <small>Apex will never ask for your PIN by phone or email.</small>
+  </section>
+  <section class="side"><div class="panel">
+    <div class="tabs"><button id="t-login" class="on" onclick="tab('login')">Sign in</button><button id="t-signup" onclick="tab('signup')">Open an account</button><button id="t-admin" onclick="tab('admin')">Staff</button></div>
+
+    <form id="f-login" onsubmit="return doLogin(event)">
+      <h2>Welcome back</h2><p class="sub">Sign in with your account number and PIN.</p>
+      <label for="l-acc">Account number</label><input id="l-acc" inputmode="numeric" maxlength="6" autocomplete="username" required>
+      <label for="l-pin">PIN</label><div class="pw"><input id="l-pin" type="password" inputmode="numeric" maxlength="4" autocomplete="current-password" required><button type="button" onclick="peek('l-pin',this)">Show</button></div>
+      <button class="btn full">Sign in</button><div id="m-login"></div>
+    </form>
+
+    <form id="f-signup" class="hidden" onsubmit="return doSignup(event)">
+      <h2>Open an account</h2><p class="sub">It takes a minute. You must be 18 or older.</p>
+      <label for="s-name">Full name</label><input id="s-name" maxlength="60" autocomplete="name" required>
+      <div class="row"><div><label for="s-age">Age</label><input id="s-age" type="number" min="18" max="120" required></div>
+      <div><label for="s-type">Account type</label><select id="s-type"><option value="savings">Savings</option><option value="current">Current</option></select></div></div>
+      <label for="s-pin">Choose a 4-digit PIN</label><div class="pw"><input id="s-pin" type="password" inputmode="numeric" maxlength="4" pattern="\d{4}" autocomplete="new-password" required><button type="button" onclick="peek('s-pin',this)">Show</button></div>
+      <button class="btn full">Open account</button><div id="m-signup"></div>
+    </form>
+
+    <div id="done" class="hidden">
+      <h2>Your account is open</h2><p class="sub">Note down your account number. You will need it to sign in.</p>
+      <div class="accbox"><span class="sub" style="margin:0" id="done-name"></span><div id="done-acc"></div></div>
+      <button class="btn full" onclick="tab('login');$('#l-acc').value=$('#done-acc').textContent;$('#l-pin').focus()">Continue to sign in</button>
+    </div>
+
+    <form id="f-admin" class="hidden" onsubmit="return doAdmin(event)">
+      <h2>Staff sign-in</h2><p class="sub">Administrator access to the bank's records.</p>
+      <label for="a-pw">Administrator password</label><div class="pw"><input id="a-pw" type="password" autocomplete="off" required><button type="button" onclick="peek('a-pw',this)">Show</button></div>
+      <button class="btn full">Enter administrator mode</button><div id="m-admin"></div>
+    </form>
+    <div class="foot"><span>Apex International Banking Limited</span><span>Secure session</span></div>
+  </div></section>
+</div>
+
+<div id="app" class="shell hidden">
+  <aside>
+    <div class="mark"><i><span>A</span></i><b>Apex International<br>Banking Limited</b></div>
+    <nav id="nav"></nav>
+    <div class="user"><b id="uname"></b><span id="usub"></span><br><button onclick="logout()">Sign out</button></div>
+  </aside>
+  <main id="main"></main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const inr=n=>'₹'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:2});
+const CREDIT=new Set(['Deposit','Money Received','FD Matured','FD Closed Early']);
+const USER_NAV=[['overview','Overview'],['deposit','Deposit'],['withdraw','Withdraw'],['transfer','Transfer'],['statements','Statements'],['fd','Fixed Deposit'],['settings','Settings']];
+const ADMIN_NAV=[['a_overview','All accounts']];
+let me=null,mode=null,idle=null;
+const NET='Cannot reach the Apex server. Start it by running start.bat (or: python server.py) and open the address it prints, usually http://127.0.0.1:5000. Do not open index.html directly.';
+
+async function api(path,body){
+  let r;
+  try{r=await fetch('/api/'+path,{method:body===undefined?'GET':'POST',headers:{'Content-Type':'application/json','X-Requested-With':'fetch'},body:body===undefined?undefined:JSON.stringify(body)})}
+  catch{throw new Error(NET)}
+  const d=await r.json().catch(()=>({}));
+  if(r.status===401&&mode){expire();throw new Error(d.error)}
+  if(!r.ok)throw new Error(d.error||'Something went wrong. Try again.');
+  return d;
+}
+const msg=(el,t,k)=>{$(el).innerHTML=t?`<div class="msg ${k}" role="alert">${esc(t)}</div>`:''};
+const peek=(id,b)=>{const i=$('#'+id);i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'Show':'Hide'};
+
+/* ---------- auth ---------- */
+function tab(t){for(const x of['login','signup','admin']){$('#f-'+x).classList.toggle('hidden',x!==t);$('#t-'+x).classList.toggle('on',x===t)}$('#done').classList.add('hidden');document.querySelector('.tabs').classList.remove('hidden')}
+function showAuth(note,kind){mode=null;me=null;clearTimeout(idle);$('#app').classList.add('hidden');$('#auth').classList.remove('hidden');
+  ['l-pin','a-pw','s-pin'].forEach(i=>$('#'+i).value='');tab('login');if(note)msg('#m-login',note,kind||'bad')}
+const expire=()=>showAuth('Your session has ended. Please sign in again.');
+async function doLogin(e){e.preventDefault();const b=e.submitter;b.disabled=true;msg('#m-login','');
+  try{await api('login',{acc_no:$('#l-acc').value.trim(),pin:$('#l-pin').value});await enter()}
+  catch(x){msg('#m-login',x.message,'bad')}finally{b.disabled=false;$('#l-pin').value=''}return false}
+async function doAdmin(e){e.preventDefault();const b=e.submitter;b.disabled=true;msg('#m-admin','');
+  try{await api('admin/login',{password:$('#a-pw').value});await enterAdmin()}
+  catch(x){msg('#m-admin',x.message,'bad')}finally{b.disabled=false;$('#a-pw').value=''}return false}
+async function doSignup(e){e.preventDefault();const b=e.submitter;b.disabled=true;msg('#m-signup','');
+  try{const d=await api('signup',{name:$('#s-name').value,age:$('#s-age').value,acc_type:$('#s-type').value,pin:$('#s-pin').value});
+    e.target.reset();for(const x of['login','signup','admin'])$('#f-'+x).classList.add('hidden');
+    document.querySelector('.tabs').classList.add('hidden');$('#done').classList.remove('hidden');
+    $('#done-name').textContent=d.name;$('#done-acc').textContent=d.acc_no}
+  catch(x){msg('#m-signup',x.message,'bad')}finally{b.disabled=false}return false}
+async function logout(){try{await api('logout',{})}catch{}showAuth('You have been signed out.','ok')}
+function bump(){clearTimeout(idle);idle=setTimeout(()=>{if(mode){api('logout',{}).catch(()=>{});expire()}},10*60*1000)}
+['click','keydown'].forEach(ev=>document.addEventListener(ev,()=>mode&&bump()));
+
+function shell(nav,title,sub){$('#auth').classList.add('hidden');$('#app').classList.remove('hidden');
+  $('#uname').textContent=title;$('#usub').textContent=sub;
+  $('#nav').innerHTML=nav.map(([k,l])=>`<a id="n-${k}" tabindex="0" onclick="go('${k}')" onkeydown="if(event.key==='Enter')go('${k}')">${l}</a>`).join('');bump()}
+async function enter(){me=await api('me');mode='user';shell(USER_NAV,me.name,'A/c '+me.acc_no);go('overview')}
+async function enterAdmin(){mode='admin';shell(ADMIN_NAV,'Administrator','Staff console');go('a_overview')}
+async function go(p,arg){document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.id==='n-'+p||(p==='a_account'&&a.id==='n-a_overview')));
+  try{await views[p](arg)}catch(x){if(mode)$('#main').innerHTML=`<div class="msg bad">${esc(x.message)}</div>`}}
+
+/* ---------- shared pieces ---------- */
+const head=(t,s,extra='')=>`<div class="pagehead"><div><h2>${t}</h2><p class="sub">${s}</p></div>${extra}</div>`;
+const sign=t=>CREDIT.has(t.type);
+function table(tx,full){return tx.length?`<div class="scroll"><table><thead><tr><th>Date</th>${full?'<th>Time</th>':''}<th>Type</th><th>Details</th><th class="n">Amount</th></tr></thead><tbody>`+
+  tx.map(t=>`<tr><td>${esc(t.date)}</td>${full?`<td>${esc(t.time)}</td>`:''}<td>${esc(t.type)}</td><td>${esc(t.message==='None'?'—':t.message)}</td><td class="n ${sign(t)?'in':'out'}">${sign(t)?'+':'−'}${inr(t.amount)}</td></tr>`).join('')+`</tbody></table></div>`
+  :'<div class="empty">No transactions yet.</div>'}
+function receipt(title,lines){return `<div class="receipt"><h3>${esc(title)}</h3><dl>${lines.map(([a,b])=>`<dt>${esc(a)}</dt><dd>${esc(b)}</dd>`).join('')}</dl></div>`}
+const now=()=>new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'medium'});
+function fdBlock(f,link){if(!f)return`<p class="empty" style="padding:0">No Fixed Deposit yet.</p>${link?`<button class="btn alt sm" style="margin-top:12px" onclick="go('fd')">Start an FD</button>`:''}`;
+  const tot=(new Date(f.maturity_date)-new Date(f.issue_date))/864e5,done=Math.min(100,Math.max(0,100*(1-f.days_left/tot)));
+  return`<span class="pill ${f.days_left>0?'':'warn'}">${esc(f.status)}</span><div class="serif" style="font-size:26px;margin:10px 0 0">${inr(f.maturity_amount)}</div>
+  <small class="note" style="display:block;margin:0">on ${esc(f.maturity_date)} · ${inr(f.amount)} at ${f.rate}%</small><div class="bar"><i style="width:${done}%"></i></div>
+  <small class="note" style="margin:0">${f.days_left>0?f.days_left+' days left':f.days_left===0?'Matures today':-f.days_left+' days since maturity'}</small>`}
+
+/* ---------- customer views ---------- */
+const views={
+async overview(){const[m,d]=await Promise.all([api('me'),api('fd')]);me=m;
+  $('#main').innerHTML=head('Overview','Welcome back, '+esc(m.name)+'.')+
+  `<div class="bal"><div><small>Available balance</small><div class="amt">${inr(m.balance)}</div></div><div class="meta">${esc(m.acc_type[0].toUpperCase()+m.acc_type.slice(1))} account<b>${m.acc_no}</b></div></div>
+  <div class="quick"><button class="btn sm" onclick="go('deposit')">Deposit</button><button class="btn sm alt" onclick="go('withdraw')">Withdraw</button><button class="btn sm alt" onclick="go('transfer')">Transfer</button><button class="btn sm alt" onclick="go('fd')">Fixed Deposit</button></div>
+  <div class="stats"><div class="stat"><small>Money in this month</small><b class="in">${inr(m.month_in)}</b></div><div class="stat"><small>Money out this month</small><b class="out">${inr(m.month_out)}</b></div></div>
+  <div class="grid"><div class="card"><h3>Recent activity</h3>${table(m.recent)}<button class="link" style="margin-top:12px" onclick="go('statements')">View full statement</button></div>
+  <div class="card"><h3>Fixed Deposit</h3>${fdBlock(d.fd,true)}</div></div>
+  <div class="card" style="margin-top:22px"><h3>Account details</h3><dl><dt>Account holder</dt><dd>${esc(m.name)}</dd><dt>Account number</dt><dd>${m.acc_no}</dd><dt>Account type</dt><dd style="text-transform:capitalize">${esc(m.acc_type)}</dd><dt>Age</dt><dd>${m.age}</dd></dl></div>`},
+
+deposit(){moneyForm('deposit','Deposit money','Add funds to your account.','Deposit')},
+withdraw(){moneyForm('withdraw','Withdraw money','Take funds out of your account.','Withdraw')},
+
+transfer(){$('#main').innerHTML=head('Transfer money','Send funds to another Apex account.')+
+  `<form class="card narrow" onsubmit="return submitForm(event,'transfer',()=>({to:$('#x-to').value.trim(),amount:$('#x-amt').value,message:$('#x-note').value,pin:$('#x-pin').value}),r=>receipt('Transfer complete',[['Sent to',r.to],['Amount',inr(r.amount)],['New balance',inr(r.balance)],['Date',now()]]))">
+  <label for="x-to">Recipient account number</label><input id="x-to" inputmode="numeric" maxlength="6" required onblur="lookup()"><div id="x-found" class="found"></div>
+  <label for="x-amt">Amount (₹)</label><input id="x-amt" type="number" min="1" step="1" required>
+  <label for="x-note">Note (optional)</label><input id="x-note" maxlength="80">
+  <label for="x-pin">Your PIN</label><input id="x-pin" type="password" inputmode="numeric" maxlength="4" required>
+  <button class="btn">Send money</button><div id="x-msg"></div></form>`},
+
+async statements(){const d=await api('statements');window._tx=d.transactions;
+  $('#main').innerHTML=head('Account statement','Balance '+inr(d.balance)+'. Newest first.',
+   `<div class="tools"><select id="flt" onchange="filt()" aria-label="Filter"><option value="all">All transactions</option><option value="in">Money in</option><option value="out">Money out</option></select>
+   <button class="btn alt sm" onclick="csv()">Download CSV</button><button class="btn alt sm" onclick="window.print()">Print</button></div>`)+`<div class="card" id="tx"></div>`;filt()},
+
+async fd(){const d=await api('fd'),f=d.fd;let h=head('Fixed Deposit','Guaranteed '+(d.rate||7)+'% a year, compounded annually. One FD per account.');
+  if(f){const m=f.days_left<=0;
+    h+=`<div class="card narrow"><div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Your deposit</h3><span class="pill ${m?'warn':''}">${esc(f.status)}</span></div>
+    <dl style="margin-top:16px"><dt>Principal</dt><dd>${inr(f.amount)}</dd><dt>Tenure</dt><dd>${f.tenure} years at ${f.rate}%</dd><dt>Interest earned</dt><dd>${inr(f.interest)}</dd><dt>Maturity amount</dt><dd><b>${inr(f.maturity_amount)}</b></dd><dt>Issued</dt><dd>${esc(f.issue_date)}</dd><dt>Matures</dt><dd>${esc(f.maturity_date)}</dd><dt>${f.days_left>0?'Time left':'Matured'}</dt><dd>${f.days_left>0?f.days_left+' days':f.days_left===0?'Today':-f.days_left+' days ago'}</dd></dl>
+    <form onsubmit="return submitForm(event,'fd/close',()=>({pin:$('#x-pin').value}),r=>receipt('${m?'Maturity amount credited':'FD closed early'}',[['Credited',inr(r.credited)],['New balance',inr(r.balance)],['Date',now()]]),()=>go('fd'))">
+    <label for="x-pin">Your PIN</label><input id="x-pin" type="password" inputmode="numeric" maxlength="4" required>
+    <button class="btn ${m?'':'danger'}" ${m?'':`onclick="return confirm('Closing early forfeits all interest and returns only your principal. Continue?')"`}>${m?'Claim maturity amount':'Close FD early'}</button><div id="x-msg"></div></form></div>`}
+  else h+=`<form class="card narrow" oninput="fdCalc()" onsubmit="return submitForm(event,'fd',()=>({amount:$('#x-amt').value,tenure:$('#x-ten').value,pin:$('#x-pin').value}),r=>receipt('Fixed Deposit created',[['Principal',inr(r.fd.amount)],['Tenure',r.fd.tenure+' years at '+r.fd.rate+'%'],['Maturity amount',inr(r.fd.maturity_amount)],['Matures on',r.fd.maturity_date],['New balance',inr(r.balance)]]),()=>go('fd'))">
+  <h3>Start an FD</h3><label for="x-amt">Amount (minimum ₹1,000)</label><input id="x-amt" type="number" min="1000" step="1" required>
+  <label for="x-ten">Tenure</label><select id="x-ten">${[1,2,3,4,5,7,10].map(y=>`<option value="${y}">${y} year${y>1?'s':''}</option>`).join('')}</select>
+  <div class="note" id="x-calc">Enter an amount to see your maturity value.</div>
+  <label for="x-pin">Your PIN</label><input id="x-pin" type="password" inputmode="numeric" maxlength="4" required>
+  <button class="btn">Create FD</button><div id="x-msg"></div></form>`;
+  $('#main').innerHTML=h},
+
+settings(){$('#main').innerHTML=head('Settings','Change your PIN.')+
+  `<form class="card narrow" onsubmit="return submitForm(event,'pin',()=>({old:$('#x-old').value,new:$('#x-new').value}),()=>receipt('PIN updated',[['Date',now()]]))">
+  <label for="x-old">Current PIN</label><input id="x-old" type="password" inputmode="numeric" maxlength="4" required>
+  <label for="x-new">New 4-digit PIN</label><input id="x-new" type="password" inputmode="numeric" maxlength="4" pattern="\\d{4}" required>
+  <button class="btn">Update PIN</button><div id="x-msg"></div></form>`},
+
+/* ---------- administrator ---------- */
+async a_overview(){const d=await api('admin/overview');window._acc=d.accounts;
+  $('#main').innerHTML=head('All accounts','Administrator view. PINs are never shown.',`<input id="q" placeholder="Search name or account no." oninput="accFilt()" style="width:260px" aria-label="Search">`)+
+  `<div class="stats"><div class="stat"><small>Accounts</small><b>${d.accounts.length}</b></div><div class="stat"><small>Total deposits held</small><b>${inr(d.total)}</b></div><div class="stat"><small>Active FDs</small><b>${d.fd_count}</b></div><div class="stat"><small>FD principal</small><b>${inr(d.fd_total)}</b></div></div>
+  <div class="card" id="accs"></div>`;accFilt()},
+
+async a_account(no){const a=await api('admin/account/'+encodeURIComponent(no));
+  $('#main').innerHTML=`<button class="link back" onclick="go('a_overview')">‹ All accounts</button>`+head(esc(a.name),'Account '+a.acc_no)+
+  `<div class="grid"><div class="card"><h3>Details</h3><dl><dt>Type</dt><dd style="text-transform:capitalize">${esc(a.acc_type)}</dd><dt>Age</dt><dd>${a.age}</dd><dt>Balance</dt><dd><b>${inr(a.balance)}</b></dd></dl>
+  <form onsubmit="return submitForm(event,'admin/resetpin',()=>({acc_no:'${a.acc_no}',pin:$('#x-new').value}),()=>receipt('PIN reset',[['Account','${a.acc_no}']]))"><label for="x-new">Reset customer PIN</label><input id="x-new" type="password" inputmode="numeric" maxlength="4" placeholder="New 4-digit PIN" required><button class="btn alt sm" style="margin-top:12px">Reset PIN</button><div id="x-msg"></div></form></div>
+  <div class="card"><h3>Fixed Deposit</h3>${a.fd?fdBlock({...a.fd,status:'On record',days_left:Math.round((new Date(a.fd.maturity_date)-new Date())/864e5)}):'<p class="empty" style="padding:0">No Fixed Deposit.</p>'}</div></div>
+  <div class="card" style="margin-top:22px"><h3>Transactions</h3>${table(a.transactions,true)}</div>`}
+};
+
+/* ---------- helpers ---------- */
+function moneyForm(kind,t,s,btn){$('#main').innerHTML=head(t,s)+
+  `<form class="card narrow" onsubmit="return submitForm(event,'${kind}',()=>({amount:$('#x-amt').value,message:$('#x-note').value,pin:$('#x-pin').value}),r=>receipt('${btn} successful',[['Amount',inr(r.amount)],['New balance',inr(r.balance)],['Date',now()]]))">
+  <label for="x-amt">Amount (₹)</label><input id="x-amt" type="number" min="1" step="1" required>
+  <label for="x-note">Note (optional)</label><input id="x-note" maxlength="80">
+  <label for="x-pin">Your PIN</label><input id="x-pin" type="password" inputmode="numeric" maxlength="4" required>
+  <button class="btn">${btn}</button><div id="x-msg"></div></form>`}
+
+async function submitForm(e,path,body,rcpt,after){e.preventDefault();const b=e.submitter;b.disabled=true;msg('#x-msg','');
+  try{const payload=body(),d=await api(path,payload);d.amount=d.amount??Number(payload.amount);
+    if(after){await after();$('#main').insertAdjacentHTML('beforeend',rcpt(d))}
+    else{e.target.reset();$('#x-found')&&($('#x-found').textContent='');$('#x-msg').innerHTML=rcpt(d)}}
+  catch(x){if(mode)msg('#x-msg',x.message,'bad')}finally{b.disabled=false}return false}
+
+async function lookup(){const v=$('#x-to').value.trim(),el=$('#x-found');if(!v){el.textContent='';return}
+  try{const d=await api('lookup',{acc_no:v});el.className='found';el.textContent='Recipient: '+d.name}
+  catch(x){el.className='found bad';el.textContent=x.message}}
+function fdCalc(){const a=+$('#x-amt').value,y=+$('#x-ten').value;if(a<1000){$('#x-calc').textContent='Enter an amount to see your maturity value.';return}
+  const m=a*Math.pow(1.07,y);$('#x-calc').textContent=`Matures to ${inr(m.toFixed(2))} after ${y} year${y>1?'s':''} (interest ${inr((m-a).toFixed(2))}).`}
+function filt(){const f=$('#flt').value,t=window._tx.filter(x=>f==='all'||(f==='in')===sign(x));$('#tx').innerHTML=table(t,true)}
+function csv(){const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
+  const r=[['Date','Time','Type','Details','Amount','Direction'],...window._tx.map(t=>[t.date,t.time,t.type,t.message,t.amount,sign(t)?'Credit':'Debit'])].map(x=>x.map(q).join(',')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([r],{type:'text/csv'}));a.download='apex-statement.csv';a.click()}
+function accFilt(){const q=($('#q')?.value||'').toLowerCase().trim(),l=window._acc.filter(a=>!q||a.name.toLowerCase().includes(q)||a.acc_no.includes(q));
+  $('#accs').innerHTML=l.length?`<div class="scroll"><table><thead><tr><th>Account</th><th>Name</th><th>Type</th><th class="n">Balance</th><th>FD</th></tr></thead><tbody>`+
+  l.map(a=>`<tr class="click" tabindex="0" onclick="go('a_account','${a.acc_no}')" onkeydown="if(event.key==='Enter')go('a_account','${a.acc_no}')"><td>${a.acc_no}</td><td>${esc(a.name)}</td><td style="text-transform:capitalize">${esc(a.acc_type)}</td><td class="n">${inr(a.balance)}</td><td>${a.fd?'<span class="pill">Active</span>':'<span class="pill mut">None</span>'}</td></tr>`).join('')+'</tbody></table></div>':'<div class="empty">No accounts match your search.</div>'}
+
+(async()=>{
+  if(location.protocol==='file:'){showAuth(NET);return}
+  try{await enter()}catch(e1){
+    if(e1.message===NET){showAuth(NET);return}
+    try{await api('admin/overview');await enterAdmin()}catch{showAuth()}}})();
+</script>
+</body>
+</html>
