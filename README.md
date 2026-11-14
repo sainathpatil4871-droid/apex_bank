@@ -2,7 +2,12 @@ Apex International Banking Limited
 
 A banking management system built in Python. It started as a console application and now also has a web interface and an Android wrapper. Account data is stored in JSON files, and the console and web versions share the same files.
 
+Most important step is that for using it when you download the zip file extract all you all need to make two files to make it working in your end.
+1) bank_database.json : with empty {}
+2) fd_data.json : with empty {}
+Then just click on start file based on what you use windows or mac.
 Features
+
 
 Customer
 
